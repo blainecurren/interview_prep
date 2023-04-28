@@ -540,3 +540,24 @@ function add(a) {
 
 console.log(add(5)(2)(4)(8)())
 
+// Var vs Let vs Const
+// Scope - a certain region of a program where a defined variable exists and can be recognized - global, block, 
+// Var = functional scope 
+// Let / Const = block scope (can only be accessed within the code block)
+
+// Variable shadowing - Var can be shadowed by let but not vice versa, this is illegal shadowing
+function test() {
+  let a = "Hello";
+
+  if (true) {
+    let a = "Hi"; // <- within this block, (a) will shadow the other (a) variable and will return Hi instead of hello
+    console.log(a);
+  }
+
+  console.log(a); // <- this will return Hello
+}
+
+// Declaration 
+//Var can be declared multiple times within the same scope, let / const cannot
+
+// Const variable MUST be initialized with a value (const a = 5;)
