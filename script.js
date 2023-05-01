@@ -1,4 +1,4 @@
-// Q1 - What is function declaration? aka function definition / statement
+/* Q1 - What is function declaration? aka function definition / statement
 
 function square(num) {
   return num * num;
@@ -508,12 +508,12 @@ function sum(a) {
 
 console.log(sum(2)(6)(1));
 
-/* Q2 - 
+// Q2 - 
   evaluate('sum')(4)(2) => 6
   evaluate('multiply')(4)(2) => 8
   evaluate('divide')(4)(2) => 2
   evaluate('subtract')(4)(2) => 2
-*/ 
+
 
 function evaluate(operation) {
   return function (a) {
@@ -561,3 +561,52 @@ function test() {
 //Var can be declared multiple times within the same scope, let / const cannot
 
 // Const variable MUST be initialized with a value (const a = 5;)
+
+// Re-initialization
+// var and let can be updated, const cannot
+
+var a = 5;
+a = 6; 
+
+let a = 5;
+a = 6;
+
+const a = 5;
+a = 6; // This will not work
+
+Hoisting
+
+There are 2 phases to executing JS code Creation / Execution
+
+Creation
+ 1. Creates a global / window object
+ 2. Sets up a memory heap for storing variable and function references
+ 3. Initializes those functions / variables declarations as undefined
+
+Execution - Executes line by line assigning the values to variables, then executes the function calls.
+  - for every new function created js engine creates a new execution context altogether
+
+Hoisting - During the creation phase, JS engine moves your variable declarations and function declarations to the top of your code.
+
+Temporal Dead Zone -  The time between the declaration and the initialization of let / const variables - variables are in the scope but have yet to be declared
+
+Example: What will this function return?
+
+function abc() { 
+  console.log(a);
+
+  var a = 10;
+}
+
+abc();
+
+This will return undefined because the console.log comes before the variable initialization
+
+
+map, filter, reduce
+ 
+
+
+
+*/
+
