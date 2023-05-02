@@ -1,4 +1,4 @@
-// Q1 - What is function declaration? aka function definition / statement
+/* Q1 - What is function declaration? aka function definition / statement
 
 function square(num) {
   return num * num;
@@ -391,9 +391,9 @@ const c = counter();
 c.add(5);
 c.add(10);
 
-// Q6 - What is a module patter?
-// Public function CAN access private function, which makes them handy for helper functions.
-// Example: If you're supposed to make an api call inside of this module, but you dont want the user to access it directly.
+// Q6 - What is a module pattern?
+// Public function CAN access private function, which makes them handy for helper functions. 
+// Example: If you're supposed to make an api call inside of this module, but you dont want the user to access it directly. 
 
 var Module = (function () {
   // <- Code is not accessible outside this module namespace
@@ -513,12 +513,11 @@ function sum(a) {
 
 console.log(sum(2)(6)(1));
 
-/* Q2 - 
+// Q2 - 
   evaluate('sum')(4)(2) => 6
   evaluate('multiply')(4)(2) => 8
   evaluate('divide')(4)(2) => 2
   evaluate('subtract')(4)(2) => 2
-*/
 
 function evaluate(operation) {
   return function (a) {
@@ -545,29 +544,126 @@ function add(a) {
 
 console.log(add(5)(2)(4)(8)());
 
-// Q4 - Currying vs Partial Application
-// The number of nested functions a curried function has are dependent upon the number of arguments it receives
+// Var vs Let vs Const
+// Scope - a certain region of a program where a defined variable exists and can be recognized - global, block, 
+// Var = functional scope 
+// Let / Const = block scope (can only be accessed within the code block)
 
-// Partial application - transforms functions into another function with a small arity. Arity is the number of arguments / operands a function receives
+// Variable shadowing - Var can be shadowed by let but not vice versa, this is illegal shadowing
+function test() {
+  let a = "Hello";
 
-function sum(a) {
-  return function (b, c) {
-    return a + b + c;
-  };
-}
-
-const x = sum(10);
-console.log(x(5, 6));
-console.log(x(3, 2));
-
-// Currying
-
-console.log(sum(20(1, 4 )));
-
-function sum(a) {
-  return function(b) {
-    return function (c) {
-      return a + b + c;
-    }
+  if (true) {
+    let a = "Hi"; // <- within this block, (a) will shadow the other (a) variable and will return Hi instead of hello
+    console.log(a);
   }
+
+  console.log(a); // <- this will return Hello
 }
+
+// Declaration 
+//Var can be declared multiple times within the same scope, let / const cannot
+
+// Const variable MUST be initialized with a value (const a = 5;)
+
+// Re-initialization
+// var and let can be updated, const cannot
+
+var a = 5;
+a = 6; 
+
+let a = 5;
+a = 6;
+
+const a = 5;
+a = 6; // This will not work
+
+Hoisting
+
+There are 2 phases to executing JS code Creation / Execution
+
+Creation
+ 1. Creates a global / window object
+ 2. Sets up a memory heap for storing variable and function references
+ 3. Initializes those functions / variables declarations as undefined
+
+Execution - Executes line by line assigning the values to variables, then executes the function calls.
+  - for every new function created js engine creates a new execution context altogether
+
+Hoisting - During the creation phase, JS engine moves your variable declarations and function declarations to the top of your code.
+
+Temporal Dead Zone -  The time between the declaration and the initialization of let / const variables - variables are in the scope but have yet to be declared
+
+Example: What will this function return?
+
+function abc() { 
+  console.log(a);
+
+  var a = 10;
+}
+
+abc();
+
+This will return undefined because the console.log comes before the variable initialization
+
+
+map, filter, reduce
+
+What is map()? A method used to create a new array out of an old array by applying a function to each element of the first array
+
+Ex: 
+const nums = [1, 2, 3, 4];
+
+const multiplyThree = nums.map((num, i, arr) => {
+
+  return num * 3;
+});
+
+console.log(multiplyThree); -> returns a new array
+
+What is filter()? A method that takes each element of an array and applies a conditional returns true, the element gets pushed into the output array and vice versa
+
+Ex:
+
+const nums = [1, 2, 3, 4];
+
+const moreThanTwo = nums.filter((num) => {
+return num > 2;
+});
+
+console.log(moreThanTwo); -> only returns elements that are more than two
+
+What is reduce();? Reduces an array of values down to just one value
+
+const nums = [1,2,3,4];
+
+const sum = nums.reduce((acc, curr, i, arr) => { -> Accumulator(acc) is the result of the previous computation. (if there is no current value set, then it will be the first index of the array)
+  return acc + curr;
+}, 0);
+
+console.log(sum); -> logs 10
+
+Polyfill for map()
+
+Ex:
+
+Array.map((num, i, arr) => {})
+
+Array.protoype.myMap = function (cb) {
+  let temp  = [];
+  for ( let i = 0; i < this.Length; i++) { -> 'this' refers to the parent array
+      temp.push(cb(this[i],i, this)) -> pushing the computation of cb
+
+      return temp;
+  };
+
+  const nums = [1, 2, 3, 4];
+
+  const multiplyThree = nums.myMap((num, i, arr) => {
+    return num * 3;
+  });
+
+  console.log(multiplyThree);
+}
+*/
+
