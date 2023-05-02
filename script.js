@@ -387,7 +387,7 @@ const c = counter();
 c.add(5);
 c.add(10);
 
-// Q6 - What is a module patter?
+// Q6 - What is a module pattern?
 // Public function CAN access private function, which makes them handy for helper functions. 
 // Example: If you're supposed to make an api call inside of this module, but you dont want the user to access it directly. 
 
@@ -604,9 +604,62 @@ This will return undefined because the console.log comes before the variable ini
 
 
 map, filter, reduce
- 
 
+What is map()? A method used to create a new array out of an old array by applying a function to each element of the first array
 
+Ex: 
+const nums = [1, 2, 3, 4];
 
+const multiplyThree = nums.map((num, i, arr) => {
+
+  return num * 3;
+});
+
+console.log(multiplyThree); -> returns a new array
+
+What is filter()? A method that takes each element of an array and applies a conditional returns true, the element gets pushed into the output array and vice versa
+
+Ex:
+
+const nums = [1, 2, 3, 4];
+
+const moreThanTwo = nums.filter((num) => {
+return num > 2;
+});
+
+console.log(moreThanTwo); -> only returns elements that are more than two
+
+What is reduce();? Reduces an array of values down to just one value
+
+const nums = [1,2,3,4];
+
+const sum = nums.reduce((acc, curr, i, arr) => { -> Accumulator(acc) is the result of the previous computation. (if there is no current value set, then it will be the first index of the array)
+  return acc + curr;
+}, 0);
+
+console.log(sum); -> logs 10
+
+Polyfill for map()
+
+Ex:
+
+Array.map((num, i, arr) => {})
+
+Array.protoype.myMap = function (cb) {
+  let temp  = [];
+  for ( let i = 0; i < this.Length; i++) { -> 'this' refers to the parent array
+      temp.push(cb(this[i],i, this)) -> pushing the computation of cb
+
+      return temp;
+  };
+
+  const nums = [1, 2, 3, 4];
+
+  const multiplyThree = nums.myMap((num, i, arr) => {
+    return num * 3;
+  });
+
+  console.log(multiplyThree);
+}
 */
 
